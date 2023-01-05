@@ -25,6 +25,7 @@ function reducer(state, action) {
         return {
             ...state,
             user: action.payload.user,
+            // Remove token if token stored in cookies
             token: action.payload.token,
             userLocation: action.payload.location,
             jobLocation: action.payload.location,
@@ -50,6 +51,7 @@ function reducer(state, action) {
         return {
             ...state,
             user: action.payload.user,
+            // Remove token if token stored in cookies
             token: action.payload.token,
             userLocation: action.payload.location,
             jobLocation: action.payload.location,
@@ -78,6 +80,7 @@ function reducer(state, action) {
         return {
             ...initialState,
             user: null,
+            // Remove token if token stored in cookies
             token: null,
             userLocation: '',
             jobLocation: '',
@@ -90,6 +93,7 @@ function reducer(state, action) {
         return {
             ...state,
             user: action.payload.user,
+            // Remove token if token stored in cookies
             token: action.payload.token,
             userLocation: action.payload.location,
             jobLocation: action.payload.location,

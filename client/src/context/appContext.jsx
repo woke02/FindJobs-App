@@ -48,6 +48,7 @@ const AppProvider = ({ children }) => {
         baseURL: 'http://localhost:5000/api/v1/'
     })
     authFetch.interceptors.request.use((config) => {
+        //Remove if token is stored in cookie or just remove the entire req interceptor
         config.headers['Authorization'] = `Bearer ${state.token}`
         return config
     }, (error) => {
@@ -77,6 +78,8 @@ const AppProvider = ({ children }) => {
             });
         }, 3000);
     };
+
+    //Remove addUsertoLocalStorage and removeUserFromLocalStorage if token stored in cookies
     const addUserToLocalStorage = ({ user, token, location }) => {
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('token', token);
@@ -92,6 +95,7 @@ const AppProvider = ({ children }) => {
         try {
             const response = await axios.post('http://localhost:5000/api/v1/auth/register', currentUser);
             console.log(response);
+            // Remove token if token stored in cookies
             const { user, token, location } = response.data;
             dispatch({
                 type: REGISTER_USER_SUCCESS,
@@ -101,6 +105,7 @@ const AppProvider = ({ children }) => {
                     location,
                 },
             });
+
             addUserToLocalStorage({ user, token, location })
         } catch (error) {
             console.log(error.response);
@@ -116,6 +121,7 @@ const AppProvider = ({ children }) => {
         try {
             const response = await axios.post('http://localhost:5000/api/v1/auth/login', currentUser);
             console.log(response);
+            // Remove token if token stored in cookies
             const { user, token, location } = response.data;
             dispatch({
                 type: LOGIN_USER_SUCCESS,
@@ -147,7 +153,7 @@ const AppProvider = ({ children }) => {
         try {
             const { data } = await authFetch.patch('/auth/updateUser', currentUser);
 
-            // no token
+            // Remove token if token stored in cookies
             const { user, location, token } = data;
 
             dispatch({
